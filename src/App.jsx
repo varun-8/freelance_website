@@ -26,11 +26,12 @@ function App() {
       <SmoothScroller>
         <ScrollToTop />
         <div className="relative min-h-screen bg-black text-white flex flex-col font-sans selection:bg-neonBlue selection:text-black">
-          {/* Global Background Layer */}
-          <div className="fixed inset-0 z-0 bg-dot-pattern pointer-events-none opacity-40"></div>
-          {/* Ambient Glows */}
-          <div className="fixed top-[-50%] left-[-10%] w-[70vw] h-[70vw] rounded-full bg-neonBlue/10 blur-[150px] pointer-events-none -z-10 animate-blob"></div>
-          <div className="fixed bottom-[-50%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-blue-900/20 blur-[150px] pointer-events-none -z-10 animate-blob" style={{ animationDelay: '2s' }}></div>
+          {/* Optimized lightweight background */}
+          <div className="fixed inset-0 z-0 bg-dot-pattern pointer-events-none opacity-30"></div>
+          
+          {/* Animated Glows - GPU accelerated with will-change */}
+          <div className="fixed top-[-50%] left-[-10%] w-[70vw] h-[70vw] rounded-full bg-neonBlue/8 blur-[150px] pointer-events-none -z-10 animate-blob" style={{ willChange: 'transform' }}></div>
+          <div className="fixed bottom-[-50%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-blue-900/15 blur-[150px] pointer-events-none -z-10 animate-blob" style={{ animationDelay: '2s', willChange: 'transform' }}></div>
 
           <Navbar />
           <main className="flex-grow z-10 pt-20">

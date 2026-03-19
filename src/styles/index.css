@@ -5,15 +5,21 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-black text-white font-sans antialiased selection:bg-neonBlue selection:text-black overflow-x-hidden;
   }
 }
 
 @layer utilities {
+  /* Lightweight background pattern - optimized for performance */
   .bg-dot-pattern {
-    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-    background-size: 24px 24px;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 0.5px, transparent 0.5px);
+    background-size: 40px 40px;
+    will-change: auto;
   }
 
   .bg-grid-pattern {
@@ -25,6 +31,24 @@
 
   .glass {
     @apply bg-black/40 backdrop-blur-xl border border-white/5;
+    will-change: backdrop-filter, transform;
+  }
+
+  /* 3D Transform Support */
+  .perspective {
+    perspective: 1200px;
+    transform-style: preserve-3d;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  /* Smooth 3D Animations */
+  .smooth-3d {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .text-gradient {
@@ -43,12 +67,32 @@
     box-shadow: 0 0 15px rgba(0, 240, 255, 0.4), inset 0 0 10px rgba(0, 240, 255, 0.1);
   }
 
+  /* Optimized button with GPU acceleration and 3D effects */
   .shimmer-btn {
-    @apply inline-flex h-12 animate-shimmer items-center justify-center rounded-full border border-white/10 px-6 font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-black;
+    @apply inline-flex h-12 animate-shimmer items-center justify-center rounded-full border border-white/10 px-6 font-medium text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-black;
     background-image: linear-gradient(110deg, #000, 45%, #1e2631, 55%, #000);
     background-size: 200% 100%;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
+  /* Scroll-linked animation support */
+  .scroll-animate {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* GPU-accelerated transitions */
+  .transition-smooth {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
+    transform: translateZ(0);
+  }
+
+  /* Optimize scroll behavior */
   .lenis.lenis-smooth {
     scroll-behavior: auto !important;
   }
@@ -66,13 +110,54 @@
   }
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - lightweight with smooth scroll */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.3);
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.6);
+}
+
+/* Smooth scroll behavior for all links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Performance optimizations for animations */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom Scrollbar - lightweight */
 ::-webkit-scrollbar {
   width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #000;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.3);
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.6);
 }
 
 ::-webkit-scrollbar-thumb {
