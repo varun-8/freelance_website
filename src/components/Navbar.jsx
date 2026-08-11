@@ -1,20 +1,23 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Zap } from 'lucide-react';
+import { Menu, X, Zap, ArrowRight, Sun, Moon } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Services', path: '/services' },
-    { name: 'Process', path: '/process' },
     { name: 'Pricing', path: '/pricing' },
     { name: 'About', path: '/about' },
+    { name: 'Contact', path: '/contact' },
 ];
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const location = useLocation();
+    const { theme, toggleTheme } = useTheme();
+    const isDark = theme === 'dark';
 
     useEffect(() => {
         const handleScroll = () => {
@@ -43,154 +46,180 @@ export default function Navbar() {
 
     return (
         <nav
-            className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled
-                    ? 'py-3 bg-gradient-to-b from-black/70 to-black/40 backdrop-blur-xl border-b border-white/10 shadow-[0_8px_32px_rgba(0,240,255,0.08)]'
-                    : 'py-6 bg-transparent border-transparent'
-                }`}
+            className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out ${
+                scrolled
+                    ? isDark
+                        ? 'bg-black/90 backdrop-blur-2xl border-b border-white/10 py-3 shadow-xl'
+                        : 'bg-white/95 backdrop-blur-2xl border-b border-slate-300 py-3 shadow-lg shadow-slate-200/60'
+                    : isDark
+                        ? 'bg-gradient-to-b from-black/90 via-black/40 to-transparent py-4 border-b border-white/5'
+                        : 'bg-white/90 backdrop-blur-md py-4 border-b border-slate-200 shadow-sm'
+            }`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center relative z-50">
-                {/* Premium Logo */}
-                <Link to="/" className="flex items-center gap-2 cursor-pointer group">
+                {/* Brand Logo - Sharp Modern Geometry */}
+                <Link to="/" className="flex items-center gap-3 cursor-pointer group">
                     <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-r from-neonBlue to-blue-600 rounded-lg blur opacity-0 group-hover:opacity-75 transition duration-300 -m-1"></div>
-                        <div className="relative bg-black px-3 py-1.5 rounded-lg border border-neonBlue/30">
-                            <Zap size={18} className="text-neonBlue" />
+                        <div className="absolute inset-0 bg-cyan-400/30 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className={`relative p-2 rounded-sm border transition-all duration-300 ${
+                            isDark
+                                ? 'bg-black/60 border-cyan-500/40 text-cyan-400 group-hover:border-cyan-400 group-hover:bg-cyan-500/10'
+                                : 'bg-cyan-50 border-cyan-300 text-cyan-700 group-hover:border-cyan-600 group-hover:bg-cyan-100'
+                        }`}>
+                            <Zap size={18} />
                         </div>
                     </div>
-                    <span className="text-xl font-bold tracking-tighter text-white group-hover:text-neonBlue transition-colors duration-300">
-                        Tech<span className="text-neonBlue">Nova</span>
+                    <span className={`text-xl font-extrabold tracking-tighter uppercase transition-colors duration-300 ${
+                        isDark ? 'text-white' : 'text-slate-950'
+                    }`}>
+                        Tech<span className={isDark ? 'text-cyan-400' : 'text-cyan-600'}>Nova</span>
                     </span>
                 </Link>
 
-                {/* Desktop Nav - Enhanced */}
-                <div className="hidden md:flex items-center gap-1">
+                {/* Desktop Navigation Links - Crisp Underline & Smooth Indicator */}
+                <div className="hidden md:flex items-center space-x-1">
                     {navLinks.map((link) => {
                         const isActive = location.pathname === link.path;
                         return (
                             <Link
                                 key={link.name}
                                 to={link.path}
-                                className={`relative px-4 py-2.5 text-sm font-medium tracking-wide transition-all duration-300 group rounded-lg ${
-                                    isActive 
-                                        ? 'text-white bg-white/5 border border-neonBlue/30' 
-                                        : 'text-gray-400 hover:text-white hover:bg-white/[0.02] border border-transparent'
+                                className={`relative px-4 py-2 text-xs uppercase tracking-widest font-extrabold transition-all duration-300 rounded-sm ${
+                                    isActive
+                                        ? isDark ? 'text-cyan-400' : 'text-cyan-700'
+                                        : isDark ? 'text-gray-300 hover:text-white' : 'text-slate-700 hover:text-slate-950'
                                 }`}
                             >
-                                <span className={`relative z-10 block transition-all duration-300 ${isActive ? 'text-neonBlue' : 'group-hover:text-neonBlue'}`}>
-                                    {link.name}
-                                </span>
+                                <span className="relative z-10">{link.name}</span>
 
-                                {/* Active Link Glow */}
+                                {/* Active Smooth Sliding Bottom Bar (Sharp Edge) */}
                                 {isActive && (
                                     <motion.div
-                                        layoutId="navbar-bg"
-                                        className="absolute inset-0 bg-gradient-to-r from-neonBlue/10 to-blue-600/5 rounded-lg -z-10"
-                                        initial={false}
-                                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                        layoutId="navbar-sharp-indicator"
+                                        className={`absolute bottom-0 left-1 right-1 h-[2.5px] ${
+                                            isDark
+                                                ? 'bg-cyan-400 shadow-[0_0_10px_rgba(0,240,255,0.8)]'
+                                                : 'bg-cyan-600 shadow-[0_2px_8px_rgba(2,132,199,0.5)]'
+                                        }`}
+                                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                                     />
-                                )}
-
-                                {/* Hover Glow for non-active */}
-                                {!isActive && (
-                                    <div className="absolute inset-0 bg-gradient-to-r from-neonBlue/0 to-blue-600/0 group-hover:from-neonBlue/5 group-hover:to-blue-600/5 rounded-lg -z-10 transition-all duration-300" />
                                 )}
                             </Link>
                         );
                     })}
                 </div>
 
-                {/* Premium CTA Button */}
-                <div className="hidden md:block">
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <Link
-                            to="/contact"
-                            className="relative group inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-semibold text-sm text-black bg-gradient-to-r from-neonBlue to-blue-400 hover:from-neonBlue hover:to-cyan-400 transition-all duration-300 shadow-[0_0_20px_rgba(0,240,255,0.3)] hover:shadow-[0_0_30px_rgba(0,240,255,0.5)] overflow-hidden"
-                        >
-                            <span className="relative z-10">Get Started</span>
-                            <motion.div
-                                animate={{ x: [0, 4, 0] }}
-                                transition={{ duration: 2, repeat: Infinity }}
-                                className="relative z-10"
-                            >
-                                →
-                            </motion.div>
-                        </Link>
-                    </motion.div>
+                {/* Right Action Bar: Theme Switcher & Sharp CTA Button */}
+                <div className="hidden md:flex items-center space-x-3">
+                    {/* Sharp Geometric Theme Toggle */}
+                    <button
+                        onClick={toggleTheme}
+                        className={`p-2.5 rounded-sm border transition-all duration-300 ${
+                            isDark
+                                ? 'bg-white/5 border-white/10 text-gray-300 hover:text-cyan-400 hover:border-cyan-400/50 hover:bg-white/10'
+                                : 'bg-slate-100 border-slate-300 text-slate-800 hover:text-cyan-700 hover:border-cyan-600 hover:bg-white'
+                        }`}
+                        title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                        aria-label="Toggle Theme"
+                    >
+                        {isDark ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} className="text-slate-800" />}
+                    </button>
+
+                    {/* Sharp Edge Primary Action Button */}
+                    <Link
+                        to="/contact"
+                        className={`group inline-flex items-center space-x-2 px-5 py-2.5 rounded-sm font-extrabold text-xs uppercase tracking-wider transition-all duration-300 border ${
+                            isDark
+                                ? 'text-black bg-cyan-400 border-cyan-400 hover:bg-cyan-300 shadow-[0_0_20px_rgba(0,240,255,0.3)]'
+                                : 'text-white bg-cyan-700 border-cyan-700 hover:bg-cyan-800 shadow-md shadow-cyan-700/25'
+                        }`}
+                    >
+                        <span>Start Project</span>
+                        <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform duration-300" />
+                    </Link>
                 </div>
 
-                {/* Mobile Menu Toggle - Premium */}
-                <button
-                    className="md:hidden relative z-50 p-2 text-gray-300 hover:text-neonBlue transition-colors duration-300 hover:bg-white/5 rounded-lg"
-                    onClick={() => setIsOpen(!isOpen)}
-                    aria-label="Toggle menu"
-                >
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={isOpen ? "close" : "open"}
-                            initial={{ opacity: 0, rotate: -90 }}
-                            animate={{ opacity: 1, rotate: 0 }}
-                            exit={{ opacity: 0, rotate: 90 }}
-                            transition={{ duration: 0.2 }}
-                        >
-                            {isOpen ? <X size={28} /> : <Menu size={28} />}
-                        </motion.div>
-                    </AnimatePresence>
-                </button>
+                {/* Mobile Hamburger & Theme Switcher */}
+                <div className="flex items-center space-x-2 md:hidden">
+                    <button
+                        onClick={toggleTheme}
+                        className={`p-2 rounded-sm border ${
+                            isDark ? 'bg-white/5 border-white/10 text-gray-300' : 'bg-white border-slate-300 text-slate-800'
+                        }`}
+                        aria-label="Toggle Theme"
+                    >
+                        {isDark ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} className="text-slate-800" />}
+                    </button>
+
+                    <button
+                        className={`p-2 rounded-sm border transition-colors ${
+                            isDark ? 'bg-white/5 border-white/10 text-gray-300' : 'bg-white border-slate-300 text-slate-800'
+                        }`}
+                        onClick={() => setIsOpen(!isOpen)}
+                        aria-label="Toggle menu"
+                    >
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={isOpen ? "close" : "open"}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                {isOpen ? <X size={22} /> : <Menu size={22} />}
+                            </motion.div>
+                        </AnimatePresence>
+                    </button>
+                </div>
             </div>
 
-            {/* Premium Mobile Nav Dropdown */}
+            {/* Mobile Dropdown Navigation Menu */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: "-100%" }}
+                        initial={{ opacity: 0, y: -15 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: "-100%" }}
-                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                        className="fixed inset-0 w-full h-screen bg-gradient-to-b from-black/95 via-black/90 to-black/95 backdrop-blur-3xl md:hidden overflow-hidden flex flex-col pt-32 px-6 z-40"
+                        exit={{ opacity: 0, y: -15 }}
+                        transition={{ duration: 0.25, ease: 'easeInOut' }}
+                        className={`fixed inset-x-0 top-[60px] border-b backdrop-blur-3xl md:hidden flex flex-col p-6 z-40 ${
+                            isDark ? 'bg-black/95 border-white/15 text-white' : 'bg-white/95 border-slate-300 text-slate-900 shadow-2xl'
+                        }`}
                     >
-                        {/* Background Gradient Accent */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-neonBlue/10 blur-[100px] pointer-events-none"></div>
-
-                        <div className="flex flex-col space-y-8 flex-grow relative z-10">
-                            {/* Navigation Links */}
-                            <div className="space-y-4">
-                                <h3 className="text-xs uppercase tracking-widest text-gray-500 font-semibold ml-2">Navigation</h3>
-                                {navLinks.map((link, i) => (
-                                    <motion.div
+                        <div className="flex flex-col space-y-2">
+                            {navLinks.map((link) => {
+                                const isActive = location.pathname === link.path;
+                                return (
+                                    <Link
                                         key={link.name}
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: 0.1 + (i * 0.08), ease: "easeOut" }}
+                                        to={link.path}
+                                        className={`text-sm uppercase font-extrabold tracking-widest py-3 px-4 rounded-sm transition-all border ${
+                                            isActive
+                                                ? isDark
+                                                    ? 'text-cyan-400 bg-cyan-500/10 border-cyan-500/40'
+                                                    : 'text-cyan-800 bg-cyan-50 border-cyan-300'
+                                                : isDark
+                                                    ? 'text-gray-300 border-transparent hover:text-white hover:bg-white/5'
+                                                    : 'text-slate-800 border-transparent hover:text-slate-950 hover:bg-slate-100'
+                                        }`}
                                     >
-                                        <Link
-                                            to={link.path}
-                                            className={`text-3xl font-bold tracking-tight relative group block py-3 px-4 rounded-lg transition-all duration-300 ${
-                                                location.pathname === link.path 
-                                                    ? 'text-neonBlue bg-neonBlue/10 border border-neonBlue/30' 
-                                                    : 'text-gray-300 hover:text-white hover:bg-white/5 border border-transparent'
-                                            }`}
-                                        >
-                                            {link.name}
-                                        </Link>
-                                    </motion.div>
-                                ))}
-                            </div>
+                                        {link.name}
+                                    </Link>
+                                );
+                            })}
 
-                            {/* CTA Section */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 + (navLinks.length * 0.08), ease: "easeOut" }}
-                                className="w-full pt-8 mt-auto pb-12 space-y-4"
-                            >
+                            <div className={`pt-4 border-t mt-3 ${isDark ? 'border-white/10' : 'border-slate-200'}`}>
                                 <Link
                                     to="/contact"
-                                    className="block w-full text-center py-4 text-black bg-gradient-to-r from-neonBlue to-blue-400 hover:from-neonBlue hover:to-cyan-400 transition-all duration-300 font-bold tracking-tight rounded-xl text-lg shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]"
+                                    className={`flex items-center justify-center space-x-2 w-full py-3.5 uppercase font-extrabold tracking-wider text-xs rounded-sm transition-all ${
+                                        isDark
+                                            ? 'text-black bg-cyan-400 hover:bg-cyan-300 shadow-[0_0_20px_rgba(0,240,255,0.3)]'
+                                            : 'text-white bg-cyan-700 hover:bg-cyan-800 shadow-md'
+                                    }`}
                                 >
-                                    Get Started
+                                    <span>Start Project</span>
+                                    <ArrowRight size={16} />
                                 </Link>
-                                <p className="text-center text-xs text-gray-500 tracking-wide uppercase">Available 24/7</p>
-                            </motion.div>
+                            </div>
                         </div>
                     </motion.div>
                 )}

@@ -1,320 +1,312 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import {
+    MapPin,
+    Globe2,
+    Users,
+    Laptop,
+    ShieldCheck,
+    Code2,
+    MessageSquare,
+    Clock,
+    HeartHandshake,
+    TrendingUp,
+    Sparkles,
+    CheckCircle2,
+    ArrowRight
+} from 'lucide-react';
 import CTA from '../components/CTA';
 import ScrollReveal from '../components/ScrollReveal';
-import { Code2, Zap, Users, Target, Rocket, Award, TrendingUp, CheckCircle2 } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
-const specialties = [
-    { icon: Code2, title: "Custom Business Software", desc: "Tailored solutions designed specifically for your business needs" },
-    { icon: Zap, title: "Cloud Platforms", desc: "Scalable, secure infrastructure for enterprise growth" },
-    { icon: TrendingUp, title: "Web Applications", desc: "Modern, fast, and responsive digital experiences" },
-    { icon: Target, title: "Industry-Specific Systems", desc: "Domain expertise across multiple sectors" }
+// Import generated visual assets
+import remoteImg from '../assets/remote_engineers.png';
+import virtualWorkImg from '../assets/virtual_work.png';
+
+const actualValues = [
+    {
+        title: "Craft Over Shortcuts",
+        desc: "We write clean code, not quick fixes. Every project is built to grow with your business, not against it.",
+        icon: Code2,
+    },
+    {
+        title: "Clear Communication",
+        desc: "You'll never have to ask where your project stands. We send regular updates and we're always a message away.",
+        icon: MessageSquare,
+    },
+    {
+        title: "We Respect Deadlines",
+        desc: "We set realistic timelines and we stick to them. No endless delays, no scope surprises, just honest delivery.",
+        icon: Clock,
+    },
+    {
+        title: "Your Trust, Our Priority",
+        desc: "Your data, your ideas and your budget are safe with us. We're upfront about everything, from costs to timelines.",
+        icon: HeartHandshake,
+    },
+    {
+        title: "We Care About Results",
+        desc: "A pretty website means nothing if it doesn't work for your business. We judge our success by your outcomes, not by how it looks.",
+        icon: TrendingUp,
+    },
+    {
+        title: "Long-Term Thinking",
+        desc: "We don't vanish after launch. We stick around to maintain, improve and grow the site with your business.",
+        icon: ShieldCheck,
+    },
 ];
-
-const stats = [
-    { number: "50+", label: "Projects Completed", icon: Code2 },
-    { number: "100%", label: "Client Satisfaction", icon: Award },
-    { number: "8+", label: "Years Experience", icon: Rocket },
-    { number: "24/7", label: "Support Available", icon: Users }
-];
-
-const values = [
-    { icon: Target, title: "Precision", desc: "Meticulous attention to every detail" },
-    { icon: Zap, title: "Performance", desc: "Speed and efficiency in everything we build" },
-    { icon: Users, title: "Partnership", desc: "We succeed when you succeed" },
-    { icon: Award, title: "Excellence", desc: "Highest standards in all deliverables" }
-];
-
-// Animation variants
-const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
-};
-
-const fadeInLeft = {
-    hidden: { opacity: 0, x: -30 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.8 } }
-};
-
-const fadeInRight = {
-    hidden: { opacity: 0, x: 30 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.8 } }
-};
-
-const scaleIn = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.6 } }
-};
-
-const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.12,
-            delayChildren: 0.2
-        }
-    }
-};
 
 export default function AboutPage() {
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
+    const navigate = useNavigate();
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.6 }}
-            className="w-full min-h-screen bg-black text-white overflow-hidden"
+            transition={{ duration: 0.5 }}
+            className={`w-full min-h-screen relative overflow-hidden transition-colors duration-300 ${
+                isDark ? 'bg-black text-white' : 'bg-slate-50 text-slate-900'
+            }`}
         >
-            {/* Ambient glows */}
+            {/* Ambient Lighting Orbs */}
             <div className="fixed inset-0 pointer-events-none -z-10">
-                <div className="absolute top-0 left-1/4 w-96 h-96 bg-neonBlue/10 rounded-full blur-[150px]"></div>
-                <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-blue-900/10 rounded-full blur-[150px]"></div>
+                <div className={`absolute top-0 left-1/4 w-[700px] h-[700px] rounded-full blur-[180px] ${
+                    isDark ? 'bg-cyan-500/10' : 'bg-cyan-400/15'
+                }`} />
+                <div className={`absolute top-1/2 right-0 w-[500px] h-[500px] rounded-full blur-[160px] ${
+                    isDark ? 'bg-blue-600/10' : 'bg-blue-400/15'
+                }`} />
             </div>
 
-            {/* Hero Section */}
-            <section className="relative pt-40 pb-32 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8 }}
-                    className="text-center"
-                >
-                    <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-neonBlue/30 bg-neonBlue/5">
-                        <Rocket className="w-4 h-4 text-neonBlue" />
-                        <span className="text-xs font-semibold tracking-[0.15em] text-neonBlue uppercase">About TechNova</span>
+            {/* HERO SECTION */}
+            <section className="relative pt-36 pb-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center z-10">
+                <ScrollReveal type="fade-up">
+                    <div className="inline-flex items-center space-x-2 mb-6">
+                        <span className="relative flex h-2.5 w-2.5">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
+                        </span>
+                        <span className={`text-xs uppercase tracking-widest font-extrabold px-4 py-1.5 rounded-full border ${
+                            isDark ? 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20' : 'text-cyan-800 bg-cyan-100 border-cyan-300'
+                        }`}>
+                            ABOUT TECHNOVA
+                        </span>
                     </div>
 
-                    <motion.h1
-                        variants={fadeUp}
-                        initial="hidden"
-                        animate="visible"
-                        className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-8 leading-[1.1]"
-                    >
-                        We Build the <br />
-                        <span className="text-gradient-neon">Future of Tech</span>
-                    </motion.h1>
+                    <h1 className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter mb-8 leading-[1.1] ${
+                        isDark ? 'text-white' : 'text-slate-950'
+                    }`}>
+                        Boundaryless <br />
+                        <span className="text-gradient-neon">Engineering Talent</span>
+                    </h1>
 
-                    <motion.p
-                        variants={fadeUp}
-                        initial="hidden"
-                        animate="visible"
-                        transition={{ delay: 0.1 }}
-                        className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed"
-                    >
-                        From concept to deployment, we engineer innovative digital solutions that transform businesses and drive measurable impact.
-                    </motion.p>
-                </motion.div>
-            </section>
-
-            {/* Stats Section */}
-            <section className="relative py-20 px-4 sm:px-6 lg:px-8 border-y border-white/5 bg-white/[0.02]">
-                <div className="max-w-6xl mx-auto">
-                    <motion.div
-                        variants={staggerContainer}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, margin: "-100px" }}
-                        className="grid grid-cols-2 lg:grid-cols-4 gap-8"
-                    >
-                        {stats.map((stat, i) => {
-                            const Icon = stat.icon;
-                            return (
-                                <motion.div
-                                    key={i}
-                                    variants={scaleIn}
-                                    className="flex flex-col items-center text-center group"
-                                >
-                                    <div className="mb-4 p-3 rounded-lg bg-neonBlue/10 group-hover:bg-neonBlue/20 transition-colors duration-300">
-                                        <Icon className="w-6 h-6 text-neonBlue" />
-                                    </div>
-                                    <div className="text-3xl md:text-4xl font-black text-white mb-1">{stat.number}</div>
-                                    <p className="text-sm text-gray-400">{stat.label}</p>
-                                </motion.div>
-                            );
-                        })}
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* Story Section */}
-            <section className="relative py-32 px-4 sm:px-6 lg:px-8 border-b border-white/5">
-                <div className="max-w-6xl mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <ScrollReveal type="fade-up">
-                            <div>
-                                <div className="inline-flex items-center gap-2 mb-6 px-3 py-1 rounded-full bg-neonBlue/10 border border-neonBlue/20">
-                                    <span className="w-2 h-2 bg-neonBlue rounded-full"></span>
-                                    <span className="text-xs font-semibold text-neonBlue uppercase tracking-wider">Our Story</span>
-                                </div>
-                                <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6 text-white">
-                                    Building Tomorrow's Solutions Today
-                                </h2>
-                                <p className="text-gray-400 text-lg leading-relaxed mb-4">
-                                    Founded with a mission to democratize advanced technology, TechNova began as a small team of passionate developers with a bold vision. Today, we're recognized as a trusted partner for enterprises seeking digital transformation.
-                                </p>
-                                <p className="text-gray-400 text-lg leading-relaxed">
-                                    We don't just write code—we craft solutions that solve real business challenges, accelerate growth, and unlock new possibilities for our clients.
-                                </p>
-                            </div>
-                        </ScrollReveal>
-
-                        <motion.div
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true, margin: "-100px" }}
-                            variants={fadeInRight}
-                            className="relative"
-                        >
-                            <div className="absolute inset-0 bg-gradient-to-br from-neonBlue/20 to-blue-900/10 rounded-2xl blur-2xl"></div>
-                            <div className="relative bg-gradient-to-br from-white/10 to-white/5 rounded-2xl border border-white/10 p-12 flex flex-col items-center justify-center min-h-[400px]">
-                                <Rocket className="w-24 h-24 text-neonBlue/30 mb-6" />
-                                <p className="text-center text-gray-300 font-semibold text-lg">Innovation Driven. Results Focused.</p>
-                            </div>
-                        </motion.div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Values Section */}
-            <section className="relative py-32 px-4 sm:px-6 lg:px-8 border-b border-white/5 bg-white/[0.01]">
-                <div className="max-w-6xl mx-auto">
-                    <ScrollReveal type="fade-up" className="mb-20 text-center">
-                        <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4 text-white">Our Core Values</h2>
-                        <p className="text-gray-400 text-lg max-w-2xl mx-auto">Guiding principles that define how we work</p>
-                    </ScrollReveal>
-
-                    <motion.div
-                        variants={staggerContainer}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, margin: "-100px" }}
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-                    >
-                        {values.map((value, i) => {
-                            const Icon = value.icon;
-                            return (
-                                <motion.div
-                                    key={i}
-                                    variants={fadeUp}
-                                    className="group p-8 rounded-xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 hover:border-neonBlue/50 transition-all duration-300 hover:bg-gradient-to-br hover:from-neonBlue/10 hover:to-white/[0.02]"
-                                >
-                                    <Icon className="w-10 h-10 text-neonBlue mb-4 group-hover:scale-110 transition-transform duration-300" />
-                                    <h3 className="text-xl font-bold text-white mb-2">{value.title}</h3>
-                                    <p className="text-gray-400 text-sm leading-relaxed">{value.desc}</p>
-                                </motion.div>
-                            );
-                        })}
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* Specialties Section */}
-            <section className="relative py-32 px-4 sm:px-6 lg:px-8 border-b border-white/5">
-                <div className="max-w-6xl mx-auto">
-                    <ScrollReveal type="fade-up" className="mb-20 text-center">
-                        <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4 text-white">What We Specialize In</h2>
-                        <p className="text-gray-400 text-lg">Comprehensive expertise across diverse domains</p>
-                    </ScrollReveal>
-
-                    <motion.div
-                        variants={staggerContainer}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, margin: "-100px" }}
-                        className="grid grid-cols-1 md:grid-cols-2 gap-8"
-                    >
-                        {specialties.map((specialty, i) => {
-                            const Icon = specialty.icon;
-                            return (
-                                <motion.div
-                                    key={i}
-                                    variants={fadeUp}
-                                    className="group p-8 rounded-xl border border-white/10 bg-gradient-to-br from-white/[0.05] to-transparent hover:from-neonBlue/10 hover:border-neonBlue/50 transition-all duration-300 cursor-default"
-                                >
-                                    <div className="flex items-start gap-4">
-                                        <div className="flex-shrink-0 p-3 rounded-lg bg-neonBlue/20 group-hover:bg-neonBlue/30 transition-colors duration-300">
-                                            <Icon className="w-6 h-6 text-neonBlue" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <h3 className="text-xl font-bold text-white mb-2 group-hover:text-neonBlue transition-colors duration-300">
-                                                {specialty.title}
-                                            </h3>
-                                            <p className="text-gray-400 text-sm leading-relaxed">{specialty.desc}</p>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            );
-                        })}
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* Why Choose Us Section */}
-            <section className="relative py-32 px-4 sm:px-6 lg:px-8 border-b border-white/5 bg-white/[0.01]">
-                <div className="max-w-6xl mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <motion.div
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true, margin: "-100px" }}
-                            variants={fadeInLeft}
-                            className="relative"
-                        >
-                            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-neonBlue/10 rounded-2xl blur-2xl"></div>
-                            <div className="relative bg-gradient-to-br from-white/10 to-white/5 rounded-2xl border border-white/10 p-12 flex flex-col items-center justify-center min-h-[400px]">
-                                <Users className="w-24 h-24 text-blue-400/30 mb-6" />
-                                <p className="text-center text-gray-300 font-semibold text-lg">Trusted Partnerships</p>
-                            </div>
-                        </motion.div>
-
-                        <ScrollReveal type="fade-up">
-                            <div>
-                                <div className="inline-flex items-center gap-2 mb-6 px-3 py-1 rounded-full bg-neonBlue/10 border border-neonBlue/20">
-                                    <span className="w-2 h-2 bg-neonBlue rounded-full"></span>
-                                    <span className="text-xs font-semibold text-neonBlue uppercase tracking-wider">Why Us</span>
-                                </div>
-                                <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-8 text-white">
-                                    Your Success is Our Mission
-                                </h2>
-                                <ul className="space-y-4">
-                                    {[
-                                        "Proven expertise with Fortune 500 clients",
-                                        "Agile methodology for rapid innovation",
-                                        "Advanced security and compliance protocols",
-                                        "Transparent communication throughout projects",
-                                        "Scalable solutions built to grow with you"
-                                    ].map((item, i) => (
-                                        <li key={i} className="flex items-center gap-3 text-gray-300">
-                                            <CheckCircle2 className="w-5 h-5 text-neonBlue flex-shrink-0" />
-                                            <span>{item}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </ScrollReveal>
-                    </div>
-                </div>
-            </section>
-
-            {/* Mission Section */}
-            <section className="relative py-40 px-4 sm:px-6 lg:px-8 border-b border-white/5">
-                <div className="absolute inset-0 bg-gradient-to-b from-neonBlue/5 to-transparent pointer-events-none -z-10"></div>
-                <ScrollReveal type="scale-in" className="max-w-4xl mx-auto text-center">
-                    <div className="inline-flex items-center gap-2 mb-8 px-3 py-1 rounded-full bg-neonBlue/10 border border-neonBlue/20">
-                        <span className="w-2 h-2 bg-neonBlue rounded-full"></span>
-                        <span className="text-xs font-semibold text-neonBlue uppercase tracking-wider">Our Mission</span>
-                    </div>
-                    <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-tight text-white mb-6">
-                        Empower Businesses Everywhere
-                    </h2>
-                    <p className="text-gray-400 text-lg md:text-xl leading-relaxed">
-                        We believe every organization deserves access to world-class technology and expert guidance to thrive in the digital age.
+                    <p className={`text-lg md:text-xl max-w-3xl mx-auto leading-relaxed font-medium ${
+                        isDark ? 'text-gray-300' : 'text-slate-700'
+                    }`}>
+                        We are a distributed team of top MNC engineers based in Erode, operating entirely remote to build software beyond traditional office boundaries.
                     </p>
                 </ScrollReveal>
             </section>
 
-            {/* CTA */}
-            <ScrollReveal type="fade-up">
+            {/* ERODE & VIRTUAL REMOTE STORY SECTION */}
+            <section className={`relative py-20 px-4 sm:px-6 lg:px-8 border-y z-10 ${
+                isDark ? 'border-white/10 bg-white/[0.01]' : 'border-slate-200 bg-white shadow-sm'
+            }`}>
+                <div className="max-w-6xl mx-auto">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center mb-20">
+                        {/* Story Text */}
+                        <ScrollReveal type="fade-up" className="lg:col-span-6">
+                            <div>
+                                <div className="inline-flex items-center space-x-2 mb-4">
+                                    <MapPin className="w-4 h-4 text-cyan-500" />
+                                    <span className={`text-xs font-extrabold uppercase tracking-wider ${
+                                        isDark ? 'text-cyan-400' : 'text-cyan-700'
+                                    }`}>
+                                        Engineered in Erode • Operating Globally
+                                    </span>
+                                </div>
+
+                                <h2 className={`text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-6 leading-tight ${
+                                    isDark ? 'text-white' : 'text-slate-950'
+                                }`}>
+                                    No Physical Office. <br />
+                                    Top Engineers Working Remotely.
+                                </h2>
+
+                                <p className={`text-base sm:text-lg leading-relaxed mb-6 font-medium ${
+                                    isDark ? 'text-gray-300' : 'text-slate-700'
+                                }`}>
+                                    Our core engineering team is located in <strong className={isDark ? 'text-cyan-400' : 'text-cyan-700'}>Erode</strong>. We intentionally do not maintain a physical office building—instead, our team consists of experienced software engineers with top MNC backgrounds working remotely.
+                                </p>
+
+                                <p className={`text-base leading-relaxed font-normal mb-8 ${
+                                    isDark ? 'text-gray-400' : 'text-slate-600'
+                                }`}>
+                                    We embrace a modern, <strong>virtual-first remote approach</strong> that connects us beyond geographic boundaries. This allows us to cut corporate overhead and focus 100% of our energy on engineering world-class software for your business.
+                                </p>
+
+                                <div className={`p-4 sm:p-5 rounded-2xl border flex items-center space-x-4 ${
+                                    isDark ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-300' : 'bg-cyan-50 border-cyan-200 text-cyan-900'
+                                }`}>
+                                    <Globe2 className="w-8 h-8 text-cyan-500 shrink-0" />
+                                    <div className="text-xs font-semibold">
+                                        <strong>Virtual Collaboration:</strong> Instant Slack/WhatsApp communication, regular screen share sprint demos, and zero geographical friction.
+                                    </div>
+                                </div>
+                            </div>
+                        </ScrollReveal>
+
+                        {/* Attractive Image Feature 1 */}
+                        <ScrollReveal type="fade-up" delay={0.2} className="lg:col-span-6">
+                            <div className="relative group">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition duration-500"></div>
+                                <div className={`relative rounded-3xl border overflow-hidden backdrop-blur-2xl ${
+                                    isDark ? 'bg-black/60 border-white/15' : 'bg-white border-slate-300 shadow-2xl shadow-slate-200/80'
+                                }`}>
+                                    <img
+                                        src={remoteImg}
+                                        alt="Remote Software Engineers Collaborating in Erode"
+                                        className="w-full h-[360px] sm:h-[420px] object-cover transition-transform duration-700 group-hover:scale-105"
+                                    />
+                                    <div className={`p-5 border-t flex items-center justify-between text-xs font-bold ${
+                                        isDark ? 'bg-black/80 border-white/10 text-gray-300' : 'bg-slate-50 border-slate-200 text-slate-800'
+                                    }`}>
+                                        <span className="flex items-center space-x-2">
+                                            <Laptop className="w-4 h-4 text-cyan-500" />
+                                            <span>Remote Engineering Team • Erode</span>
+                                        </span>
+                                        <span className="text-cyan-500">Virtual Synergy</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ScrollReveal>
+                    </div>
+                </div>
+            </section>
+
+            {/* VALUES WE ACTUALLY FOLLOW SECTION */}
+            <section className={`relative py-28 px-4 sm:px-6 lg:px-8 border-b z-10 ${
+                isDark ? 'border-white/10' : 'border-slate-200 bg-slate-50'
+            }`}>
+                <div className="max-w-6xl mx-auto">
+                    <ScrollReveal type="fade-up" className="text-center max-w-3xl mx-auto mb-16">
+                        <div className="inline-flex items-center space-x-2 mb-3">
+                            <Sparkles className="w-4 h-4 text-cyan-500" />
+                            <span className={`text-xs uppercase tracking-widest font-extrabold ${
+                                isDark ? 'text-cyan-400' : 'text-cyan-700'
+                            }`}>
+                                OPERATING CODE OF CONDUCT
+                            </span>
+                        </div>
+
+                        <h2 className={`text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 ${
+                            isDark ? 'text-white' : 'text-slate-900'
+                        }`}>
+                            Values We Actually Follow
+                        </h2>
+
+                        <p className={`text-base sm:text-lg leading-relaxed font-medium max-w-2xl mx-auto ${
+                            isDark ? 'text-gray-300' : 'text-slate-700'
+                        }`}>
+                            Not corporate buzzwords, these are the principles we apply to every project, every conversation, and every line of code.
+                        </p>
+                    </ScrollReveal>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {actualValues.map((val, i) => {
+                            const Icon = val.icon;
+                            return (
+                                <ScrollReveal key={val.title} type="fade-up" delay={i * 0.1}>
+                                    <div className={`h-full p-8 rounded-3xl border transition-all duration-300 flex flex-col justify-between ${
+                                        isDark
+                                            ? 'bg-white/[0.02] border-white/10 hover:border-cyan-400/50 hover:bg-black/70 hover:shadow-[0_0_30px_rgba(6,182,212,0.2)]'
+                                            : 'bg-white border-slate-200 shadow-lg shadow-slate-200/60 hover:border-cyan-600'
+                                    }`}>
+                                        <div>
+                                            <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center mb-6 transition-transform group-hover:scale-110 ${
+                                                isDark
+                                                    ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400'
+                                                    : 'bg-cyan-100 border-cyan-200 text-cyan-700'
+                                            }`}>
+                                                <Icon className="w-6 h-6" />
+                                            </div>
+
+                                            <h3 className={`text-xl font-bold mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                                {val.title}
+                                            </h3>
+
+                                            <p className={`text-xs leading-relaxed font-normal ${
+                                                isDark ? 'text-gray-400' : 'text-slate-600'
+                                            }`}>
+                                                {val.desc}
+                                            </p>
+                                        </div>
+
+                                        <div className="pt-6 mt-6 border-t border-white/10 flex items-center space-x-2 text-[11px] font-bold text-cyan-500">
+                                            <CheckCircle2 className="w-4 h-4" />
+                                            <span>Applied to your project</span>
+                                        </div>
+                                    </div>
+                                </ScrollReveal>
+                            );
+                        })}
+                    </div>
+                </div>
+            </section>
+
+            {/* VIRTUAL COLLABORATION IMAGE FEATURE 2 */}
+            <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10">
+                <div className={`rounded-3xl border p-8 sm:p-12 overflow-hidden backdrop-blur-2xl ${
+                    isDark ? 'bg-gradient-to-r from-white/[0.03] to-black border-white/15' : 'bg-white border-slate-300 shadow-xl'
+                }`}>
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div className="lg:col-span-7">
+                            <div className="inline-flex items-center space-x-2 mb-3">
+                                <Users className="w-4 h-4 text-cyan-500" />
+                                <span className={`text-xs font-extrabold uppercase tracking-wider ${isDark ? 'text-cyan-400' : 'text-cyan-700'}`}>
+                                    Connecting Beyond Boundaries
+                                </span>
+                            </div>
+
+                            <h3 className={`text-3xl font-extrabold tracking-tight mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                Modern Virtual Workflow for Global Clients
+                            </h3>
+
+                            <p className={`text-sm leading-relaxed mb-6 ${isDark ? 'text-gray-300' : 'text-slate-700'}`}>
+                                Whether you are in India, North America, Europe, or Australia, our virtual-first setup guarantees zero lag in communication. We work on your timeline, send structured updates, and deliver clean software.
+                            </p>
+
+                            <button
+                                onClick={() => navigate('/contact')}
+                                className={`px-6 py-3.5 rounded-xl font-bold text-xs sm:text-sm inline-flex items-center space-x-2 transition-all shadow-md ${
+                                    isDark
+                                        ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-black hover:brightness-110'
+                                        : 'bg-cyan-700 text-white hover:bg-cyan-800'
+                                }`}
+                            >
+                                <span>Get in Touch With Us</span>
+                                <ArrowRight className="w-4 h-4" />
+                            </button>
+                        </div>
+
+                        <div className="lg:col-span-5">
+                            <div className="rounded-2xl border overflow-hidden shadow-lg border-white/10">
+                                <img
+                                    src={virtualWorkImg}
+                                    alt="Virtual Work Beyond Boundaries"
+                                    className="w-full h-56 sm:h-64 object-cover"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* CTA SECTION */}
+            <ScrollReveal type="fade-up" className="relative z-20">
                 <CTA />
             </ScrollReveal>
         </motion.div>
